@@ -17,7 +17,6 @@ public class UIPanel extends JPanel
     public UIPanel()
     {
         super();
-        setSize(400, 400);
         setOpaque(false);
     }
 

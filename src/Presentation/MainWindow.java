@@ -1,7 +1,11 @@
 package Presentation;
 
 import javax.swing.JFrame;
+import javax.swing.JSplitPane;
+import javax.swing.border.Border;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,6 +22,9 @@ public class MainWindow extends JFrame
 
     public MainWindow()
     {
+        
+        //      Configuracion de la Ventana
+        //=====================================================
         super("Test Window");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -27,13 +34,6 @@ public class MainWindow extends JFrame
         //Convertir la ventana completamente invisible
         setUndecorated(true);
         setBackground(new Color(255, 255, 255, 0));
-
-        UIPanel mainPanel = new UIPanel();
-        mainPanel.setGradient(Color.decode("#00F260"), Color.decode("#0575E6"));
-        mainPanel.setRoundedCorners(30);
-
-        add(mainPanel, BorderLayout.CENTER);
-
 
         //Agregar la funcionalidad para que la ventana se pueda arrastrar con el mouse
         MouseAdapter dragFrame = new MouseAdapter()
@@ -58,6 +58,30 @@ public class MainWindow extends JFrame
         
         addMouseListener(dragFrame);
         addMouseMotionListener(dragFrame);
+        //=====================================================
+
+        
+
+        //      Configuracion de los Paneles
+        //=====================================================
+        int arcSize = 20;
+
+        UIPanel mainPanel = new UIPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setSize(getWidth(), getHeight());
+        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setRoundedCorners(arcSize);
+
+        //Panel menu abarca 30% de la ventana
+        Dimension menuSize = new Dimension( (int)(getWidth()*0.3f), getHeight());
+        UIPanel menuPanel = new UIPanel();
+        menuPanel.setPreferredSize(menuSize);
+        menuPanel.setGradient(Color.decode("#00F260"), Color.decode("#0575E6"));
+        menuPanel.setRoundedCorners(arcSize);
+
+        mainPanel.add(menuPanel, BorderLayout.WEST);
+        add(mainPanel, BorderLayout.CENTER);
+        //=====================================================
 
         setVisible(true);
     }
