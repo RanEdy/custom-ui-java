@@ -33,8 +33,6 @@ public class UIPanel extends JPanel
     protected void paintComponent(Graphics g)
     {
         Graphics2D G2D = (Graphics2D)g; //Obtener un contexto de graficos en 2D basado en el parametro pasado
-        System.out.println("Arc: " + arcSize);
-
         
         //          Renderizado Personalizado
         /*====================================================*/
@@ -60,11 +58,6 @@ public class UIPanel extends JPanel
 
         /*====================================================*/
         
-
-
         super.paintComponent(g); //utilizar el metodo de pintar de la clase padre
-
     }
-
-
 }

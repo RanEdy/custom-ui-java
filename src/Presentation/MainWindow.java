@@ -1,8 +1,6 @@
 package Presentation;
 
 import javax.swing.JFrame;
-import javax.swing.JSplitPane;
-import javax.swing.border.Border;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,8 +13,8 @@ import Presentation.CustomComponents.UIPanel;
 
 public class MainWindow extends JFrame
 {
-    private final int width = 800;
-    private final int height = 500;
+    private final int width = 1200;
+    private final int height = 700;
 
     private Point inicialMouse, inicialFrame;
 
@@ -64,7 +62,7 @@ public class MainWindow extends JFrame
 
         //      Configuracion de los Paneles
         //=====================================================
-        int arcSize = 20;
+        int arcSize = 15;
 
         UIPanel mainPanel = new UIPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -72,8 +70,8 @@ public class MainWindow extends JFrame
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setRoundedCorners(arcSize);
 
-        //Panel menu abarca 30% de la ventana
-        Dimension menuSize = new Dimension( (int)(getWidth()*0.3f), getHeight());
+        //Panel menu abarca 8% del ancho de la ventana
+        Dimension menuSize = new Dimension( (int)(getWidth()*0.08f), getHeight());
         UIPanel menuPanel = new UIPanel();
         menuPanel.setPreferredSize(menuSize);
         menuPanel.setGradient(Color.decode("#00F260"), Color.decode("#0575E6"));
