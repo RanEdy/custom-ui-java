@@ -3,5 +3,8 @@
         "src"
     ],
     "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": []
+    "java.project.referencedLibraries": [
+        "lib\\miglayout\\miglayout-core-11.4.2.jar",
+        "lib\\miglayout\\miglayout-swing-11.4.2.jar"
+    ]
 }
