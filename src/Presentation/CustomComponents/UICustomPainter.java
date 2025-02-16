@@ -19,8 +19,13 @@ public class UICustomPainter
 
     private int arcSize = 0; //tamaño en pixeles de los bordes redondeados
 
+    //Variables para el borde
+    private boolean hasBorder = false;
+    private int borderThickness = 0;
+    private Color borderColor = Color.BLACK;
+
     //Variables para controlar el gradiente
-    public static final int GRADIENT_VERTICAL = 0, GRADIENT_HORIZONTAL = 1, GRADIENT_DIAGONAL = 2; //todas las opciones para la direccion del gradiente
+    public static final int GRADIENT_NO_CHANGE = -1, GRADIENT_VERTICAL = 0, GRADIENT_HORIZONTAL = 1, GRADIENT_DIAGONAL = 2; //todas las opciones para la direccion del gradiente
     private Point gradientStart = new Point(0,0), gradientEnd = new Point(0,0);
     private boolean hasGradient = false;
     private Color gradientColor1 = Color.WHITE, gradientColor2 = Color.WHITE;
@@ -48,28 +53,43 @@ public class UICustomPainter
         hasGradient = true;
         gradientColor1 = color1;
         gradientColor2 = color2;
-
+        
         switch(gradientType)
         {
             case GRADIENT_VERTICAL:
                 gradientStart = new Point(0,0);
-                gradientEnd = new Point(0, component.getPreferredSize().height);
+                gradientEnd = new Point(0, getRealHeight());
                 break;
             case GRADIENT_HORIZONTAL:
                 gradientStart = new Point(0,0);
-                gradientEnd = new Point(component.getPreferredSize().width, 0);
+                gradientEnd = new Point(getRealWidth(), 0);
                 break;
             case GRADIENT_DIAGONAL:
                 gradientStart = new Point(0,0);
-                gradientEnd = new Point(component.getPreferredSize().width, component.getPreferredSize().height);
+                gradientEnd = new Point(getRealWidth(), getRealHeight());
+                break;
+            case GRADIENT_NO_CHANGE:
                 break;
 
         }
     }
 
+    public Color[] getGradientColors() { return new Color[] {gradientColor1, gradientColor2}; }
+    
+    public boolean hasGradient() { return hasGradient; };
+
     public void setRoundedCorners(int arcSize) { this.arcSize = arcSize; }
+    
+    public int getArcSize() { return arcSize; }
 
+    public void setCustomBorder(Color color, int thickness)
+    {
+        hasBorder = true;
+        borderColor = color;
+        borderThickness = thickness;
+    }
 
+    public int getBorderThickness() { return borderThickness; }
 
     public void customPaint(Graphics g)
     {
@@ -80,8 +100,14 @@ public class UICustomPainter
 
         G2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON); //Activar el antialiasing
 
-        //Colorear el fondo
+        //Colorear el border
+        if (hasBorder)
+        {
+            G2D.setColor(borderColor);
+            G2D.fillRoundRect(0, 0, getRealWidth(), getRealHeight(), arcSize, arcSize);
+        }
 
+        //Colorear el fondo
         //Gradiente
         if (hasGradient)
         {
@@ -98,8 +124,18 @@ public class UICustomPainter
         {
             G2D.setColor(component.getBackground());
         }
-        G2D.fillRoundRect(0, 0, component.getWidth(), component.getHeight(), arcSize, arcSize); //Dibujar un rectangulo con los bordes redondeados
+        G2D.fillRoundRect(borderThickness, borderThickness, getRealWidth() - 2*borderThickness, getRealHeight() - 2*borderThickness, arcSize, arcSize); //Dibujar un rectangulo con los bordes redondeados
 
         /*====================================================*/
+    }
+
+    public int getRealWidth()
+    {
+        return Math.max(0, Math.max(component.getWidth(), component.getPreferredSize().width));
+    }
+
+    public int getRealHeight()
+    {
+        return Math.max(0, Math.max(component.getHeight(), component.getPreferredSize().height));
     }
 }

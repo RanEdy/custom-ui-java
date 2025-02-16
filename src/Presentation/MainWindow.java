@@ -2,6 +2,7 @@ package Presentation;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
+import javax.swing.SwingConstants;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -12,6 +13,7 @@ import java.awt.event.MouseAdapter;
 
 import Presentation.CustomComponents.UIFlatPanel;
 import Presentation.CustomComponents.UICustomPainter;
+import Presentation.CustomComponents.UIFlatButton;
 import Presentation.CustomComponents.UIMenuPanel;
 import Presentation.CustomComponents.UIUpperPanel;
 import net.miginfocom.swing.MigLayout;
@@ -24,7 +26,7 @@ public class MainWindow extends JFrame
 
     //Variables de Debug
     private boolean debugFlag = false;
-    private final String debugLayout = "debug,";
+    private String debugLayout = "debug,";
 
     //Componentes
     MigLayout rootLayout;
@@ -90,6 +92,7 @@ public class MainWindow extends JFrame
         {
             setUndecorated(true);
             setBackground(new Color(255, 255, 255, 0));
+            debugLayout = "";
         }
         
     }
@@ -128,15 +131,35 @@ public class MainWindow extends JFrame
         //Panel del contenido (derecha)
         Dimension contentPanelSize = new Dimension(getWidth() - menuPanel.getPreferredSize().width, getHeight() - upper.getPreferredSize().height);
         contentPanel = new UIFlatPanel();
+        contentPanel.setLayout(null);
         contentPanel.setPreferredSize(contentPanelSize);
-        contentPanel.setBackground(new Color(200,200,200,210));
+        contentPanel.setBackground(new Color(100, 100, 100, 200));
         contentPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 
+        //Boton de prueba
+        UIFlatButton boton = new UIFlatButton();
+        boton.setText("Hola boton");
+        boton.setForeground(Color.WHITE);
+        boton.setHorizontalAlignment(SwingConstants.CENTER);
+        boton.setSize(200, 50);
+        boton.setPreferredSize(new Dimension(200, 50));
+        boton.setLocation(100, 200);
+        boton.setBackground(new Color(100, 100, 100, 0));
+        boton.setRoundedCorners(30);
+        boton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e)
+            {
+                System.out.println("Click");
+            }
+        });
+
+        contentPanel.add(boton);
 
         //Configuracion del layout de los componentes
-        mainPanel.add(upper, "wrap");
+        mainPanel.add(upper, "wrap, span 2");
         mainPanel.add(menuPanel);
-        //mainPanel.add(contentPanel);
+        mainPanel.add(contentPanel);
     
         add(mainPanel, BorderLayout.CENTER);
         //=====================================================

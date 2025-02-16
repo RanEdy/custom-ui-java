@@ -3,9 +3,9 @@ package Presentation.CustomComponents;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
-public class UIFlatPanel extends JLayeredPane
+public class UIFlatPanel extends JPanel
 {
     private UICustomPainter customPainter;
 
